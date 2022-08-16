@@ -28,6 +28,7 @@ void open_adjective()
 }
 */
 
+/*
  choice_Word(int n) //void x return 값이 있기때문 //확률 배열
 {
     int choice=56; //choice가 랜덤하게 선택되게 변경 sum 범위 안에서
@@ -44,7 +45,7 @@ void open_adjective()
         }
     }
 }
+*/
 
 //명사 배열 생성
 //형용사 배열 생성
-
