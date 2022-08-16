@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-void choice_Word(int n);
-
-
 int main()
 {
     choice_Word(5);
@@ -50,3 +47,4 @@ void open_adjective()
 
 //명사 배열 생성
 //형용사 배열 생성
+
