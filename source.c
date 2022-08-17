@@ -24,15 +24,41 @@
 // 파일을 열고 닫을 수 있는 파일 생성.
 // 파일 열어서 5개 랜덤으로 출력가는 한지 확인. 
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
+#define MAX 100
+
 int main()
 {
-    FILE* fp = fopen("감정_화남.txt", "r");
-    char a [100];
-    fgets(a, 100, fp);
+    char* n[5];
+    char* name;
+
+    FILE* fp = NULL;
+    int cnt = 0;
+
+    fp = fopen("감정_화남.txt", "r");
+    if (fp == NULL)
+    {
+        fprintf(stderr, "File Open Error!\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        name = (char*)malloc(sizeof(char) * MAX);
+        fgets(name, MAX, fp);
+        n[i] = name;
+        printf("%s", name);
+    }
+
+    printf("\n\n");
+
+    for (int i = 0; i < 5; i++)
+        printf("%s", n[i]);
     fclose(fp);
-    printf("%s\n", a);
+
     return 0;
 }
