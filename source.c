@@ -23,6 +23,7 @@
 // 텍스트 파일 7개 생성 (한 줄에 한 단어씩) 감정에서 4개, 사물, 지명, 인물
 // 파일을 열고 닫을 수 있는 파일 생성.
 // 파일 열어서 5개 랜덤으로 출력가는 한지 확인. 
+// 랜덤으로 5개의 단어를 출력할 수 있도록. 
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -54,10 +55,7 @@ int main()
         printf("%s", name);
     }
 
-    printf("\n\n");
 
-    for (int i = 0; i < 5; i++)
-        printf("%s", n[i]);
     fclose(fp);
 
     return 0;
