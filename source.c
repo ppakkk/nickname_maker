@@ -25,39 +25,69 @@
 // 파일 열어서 5개 랜덤으로 출력가는 한지 확인. 
 // 랜덤으로 5개의 단어를 출력할 수 있도록. 
 
-#define _CRT_SECURE_NO_WARNINGS
+// #define _CRT_SECURE_NO_WARNINGS
+
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <time.h>
+
+// #define MAX 100
+
+// int main()
+// {
+//     char* n[5];
+//     char* name;
+
+//     FILE* fp = NULL;
+//     int cnt = 0;
+
+//     fp = fopen("감정_화남.txt", "r");
+//     if (fp == NULL)
+//     {
+//         fprintf(stderr, "File Open Error!\n");
+//         exit(1);
+//     }
+
+//     srand(time(NULL));
+//     for(int i=0; i<5;i++){
+         
+//         int random = rand()%10;
+//         printf("%s", n[random]);
+//         // name = (char*)malloc(sizeof(char) * MAX);
+//         // fgets(name, MAX, fp);
+//         // n[i] = name;
+//         // printf("%s", name);
+//     }
+
+//     fclose(fp);
+
+//     return 0;
+// }
+// //랜덤함수 생성 0~파일 길이
 
 #include <stdio.h>
-#include <stdlib.h>
-
-#define MAX 100
-
+#include <string.h>
 int main()
 {
-    char* n[5];
-    char* name;
-
-    FILE* fp = NULL;
-    int cnt = 0;
-
-    fp = fopen("감정_화남.txt", "r");
-    if (fp == NULL)
-    {
-        fprintf(stderr, "File Open Error!\n");
-        exit(1);
+    FILE *fp = fopen("감정_화남.txt", "r");
+    char str[100];
+    int i, acc=0, lines =0, Lbegin[20] = {0};
+    while(! feof(fp))
+    if(fgets(str,sizeof(str), fp)!=NULL){
+        if(lines>0)
+        Lbegin[lines]=acc;
+        acc += strlen(str) +1;
+        printf("%s", str);
+        lines++;
+    }
+    for(int i=0; i<lines; i++){
+        printf("%s\n", Lbegin[i]);
+        printf("현재 파일 인디케이터 값 + %ld\n", ftell(fp));
     }
 
-    for (int i = 0; i < 5; i++)
-    {
-        name = (char*)malloc(sizeof(char) * MAX);
-        fgets(name, MAX, fp);
-        n[i] = name;
-        printf("%s", name);
-    }
-
-
+    //printf("출력하고 싶은 줄 수를 입력하세요:");
+    // fseek(fp, Lbegin[i-1], SEEK_SET);
+    // printf("%s", fgets(str, sizeof(str), fp));
     fclose(fp);
-
     return 0;
 }
-//랜덤함수 생성 0~파일 길이
