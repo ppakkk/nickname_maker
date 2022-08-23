@@ -67,22 +67,35 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 int main()
 {
     FILE *fp = fopen("감정_화남.txt", "r");
     char str[100];
-    int i, acc=0, lines =0, Lbegin[20] = {0};
+    int i, acc=0, lines =0, Lbegin[100] = {0};
     while(! feof(fp))
     if(fgets(str,sizeof(str), fp)!=NULL){
         if(lines>0)
         Lbegin[lines]=acc;
         acc += strlen(str) +1;
-        printf("%s", str);
+        // printf("%s", str);
         lines++;
     }
-    for(int i=0; i<lines; i++){
-        printf("%s\n", Lbegin[i]);
-        printf("현재 파일 인디케이터 값 + %ld\n", ftell(fp));
+
+    int random_index[5];
+    srand(time(NULL));
+    for(int i=0; i<5; i++){
+        
+        int random;
+        random = rand() % lines;
+        random_index[i]=random;
+    }
+
+    for(int i=0; i<5; i++){
+        //printf("%d ", random_index[i]);
+        fseek(fp, Lbegin[random_index[i]],SEEK_SET);
+        printf("%s", fgets(str, sizeof(str), fp));
     }
 
     //printf("출력하고 싶은 줄 수를 입력하세요:");
@@ -91,3 +104,8 @@ int main()
     fclose(fp);
     return 0;
 }
+
+//lines수 기준으로 0~lines 랜덤값
+// fseek 활용
+// 랜덤 5개 뽑기
+// 닉네임-> 구조체
