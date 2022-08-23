@@ -105,6 +105,11 @@ int main()
     return 0;
 }
 
+struct nickname{
+    char coreword[20];
+    char emotion[20];
+    char special[3];
+}
 //lines수 기준으로 0~lines 랜덤값
 // fseek 활용
 // 랜덤 5개 뽑기
