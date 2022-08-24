@@ -1,3 +1,5 @@
+
+
 // 개인 맞춤형 닉네임 생성기
 // 처음에 사용자가 꼭 넣었으면하는 단어를 씀(옵션 선택여부 원함과 원하지 않음 중에 선택). 만약 사용자는 도희라는 단어가 들어가길 원함. 
 // 그럼 닉네임에 도희라는 단어가 무조건 들어가있어야함.-> 특성변수에 저장 
@@ -27,42 +29,7 @@
 
 // #define _CRT_SECURE_NO_WARNINGS
 
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <time.h>
 
-// #define MAX 100
-
-// int main()
-// {
-//     char* n[5];
-//     char* name;
-
-//     FILE* fp = NULL;
-//     int cnt = 0;
-
-//     fp = fopen("감정_화남.txt", "r");
-//     if (fp == NULL)
-//     {
-//         fprintf(stderr, "File Open Error!\n");
-//         exit(1);
-//     }
-
-//     srand(time(NULL));
-//     for(int i=0; i<5;i++){
-         
-//         int random = rand()%10;
-//         printf("%s", n[random]);
-//         // name = (char*)malloc(sizeof(char) * MAX);
-//         // fgets(name, MAX, fp);
-//         // n[i] = name;
-//         // printf("%s", name);
-//     }
-
-//     fclose(fp);
-
-//     return 0;
-// }
 // //랜덤함수 생성 0~파일 길이
 
 #include <stdio.h>
@@ -109,7 +76,8 @@ struct nickname{
     char coreword[20];
     char emotion[20];
     char special[3];
-}
+};
+
 //lines수 기준으로 0~lines 랜덤값
 // fseek 활용
 // 랜덤 5개 뽑기
