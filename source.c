@@ -67,11 +67,11 @@ int main()
     char in_str[20];
     scanf("%s", in_str);
     if(in_str[0] == ':'){
-        printf("test \n %s", choosen_str[(int)in_str[1]-48]);
+        printf("test \n ");
         strcat(result, choosen_str[(int)in_str[1]-48]);
-        printf("%s nnn test ",result);
+        
     }
-    
+    printf("%s nnn test ",result);
     return 0;
 };
 
@@ -81,3 +81,4 @@ int main()
 // 랜덤 5개 뽑기
 // 닉네임-> 구조체
 // 확률, 글자수 제한
+// 라인으로 받기하되 출력할때 엔터가 있으면 안 됨.
