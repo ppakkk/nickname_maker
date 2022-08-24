@@ -1,8 +1,4 @@
-
-
 // 개인 맞춤형 닉네임 생성기
-// 처음에 사용자가 꼭 넣었으면하는 단어를 씀(옵션 선택여부 원함과 원하지 않음 중에 선택). 만약 사용자는 도희라는 단어가 들어가길 원함. 
-// 그럼 닉네임에 도희라는 단어가 무조건 들어가있어야함.-> 특성변수에 저장 
 // 컴퓨터는 사용자에게 추천을 함. 어느 유형을 할 것인지? -> 사용자에게 디폴드값을 주어주고 사용자가 선택하는 함수사용 
 // 창-> 1.행복 2.슬픈 등등 이렇게 추천을 하면 사용자는 숫자를 입력해 선택을 함. ->사용자 입력함수
 // 그러면 프로그램은 행복을 고른 사용자에게는 행복에 들어있는 파일을 출력해줌. ->파일입출력
@@ -38,6 +34,7 @@
 #include <stdlib.h>
 int main()
 {
+    char result[60] = "\0";
     FILE *fp = fopen("감정_화남.txt", "r");
     char str[100];
     int i, acc=0, lines =0, Lbegin[100] = {0};
@@ -57,23 +54,30 @@ int main()
         random = rand() % lines;
         random_index[i]=random;
     }
-
+    char choosen_str[5][20];
     for(int i=0; i<5; i++){
         fseek(fp, Lbegin[random_index[i]],SEEK_SET);
-        printf("%s", fgets(str, sizeof(str), fp));
+        strcpy(choosen_str[i],fgets(str, sizeof(str), fp));
+        printf("%s", choosen_str[i]);
     }
     
     fclose(fp);
-    return 0;
-}
 
-struct nickname{
-    char coreword[20];
-    char emotion[20];
-    char special[3];
+    printf("다음 제시된 단어 중에 선택하시거나 6 을 입력해 원하는 단어를 추가하십시오.");
+    char in_str[20];
+    scanf("%s", in_str);
+    if(in_str[0] == ':'){
+        printf("test \n %s", choosen_str[(int)in_str[1]-48]);
+        strcat(result, choosen_str[(int)in_str[1]-48]);
+        printf("%s nnn test ",result);
+    }
+    
+    return 0;
 };
+
 
 //lines수 기준으로 0~lines 랜덤값
 // fseek 활용
 // 랜덤 5개 뽑기
 // 닉네임-> 구조체
+// 확률, 글자수 제한
