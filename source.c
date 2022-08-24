@@ -46,7 +46,6 @@ int main()
         if(lines>0)
         Lbegin[lines]=acc;
         acc += strlen(str) +1;
-        // printf("%s", str);
         lines++;
     }
 
@@ -60,14 +59,10 @@ int main()
     }
 
     for(int i=0; i<5; i++){
-        //printf("%d ", random_index[i]);
         fseek(fp, Lbegin[random_index[i]],SEEK_SET);
         printf("%s", fgets(str, sizeof(str), fp));
     }
-
-    //printf("출력하고 싶은 줄 수를 입력하세요:");
-    // fseek(fp, Lbegin[i-1], SEEK_SET);
-    // printf("%s", fgets(str, sizeof(str), fp));
+    
     fclose(fp);
     return 0;
 }
