@@ -36,59 +36,64 @@
 // 라인으로 받기하되 출력할때 엔터가 있으면 안 됨.
 // //랜덤함수 생성 0~파일 길이
 
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
 
+#define MAX_KLEN 15 //키워드 최대 길이
+#define MAX_NLEN 30 //닉네임 최대 길이
+
+void run(); //실행
+int selectMenu();//첫 화면
+void printMenual(); //1.설명글
+void listNickname(); //2. 닉네임 목록
+void createNickname(); //3.닉네임 생성
+FILE* selectEFile(int j); //감정파일선택
+char selectRandomWords(FILE*fp); //랜덤 추출
+void selectEWord(); //추출된 5개 단어 중 선택
 
 int main()
 {
-    printInitScreen();
-    chooseFrist();
-    printFrist_name();
-
-    
-    // printf("다음 제시된 단어 중에 선택하시거나 6 을 입력해 원하는 단어를 추가하십시오.");
-    // char in_str[20];
-    // scanf("%s", in_str);
-    // if(in_str[0] == ':'){
-    //     printf("test \n ");
-    //     strcat(result, choosen_str[(int)in_str[1]-48]);
-        
-    // }
-    // printf("%s nnn test ",result);
-
-    // return 0;
+    run(); 
 };
 
-void printInitScreen()
+void run()
 {
-    printf("****** 닉네임 생성기 ******");
-    printf("\n\n");
-}
+    int key;
+    while((key=selectMenu())!=0){
+        switch(key) {
+            case 1: printMenual(); break;
+            case 2: printf("11"); break; //istNickname();
+            case 3: printf("33");  break; //createNickname();
+        };
+    };
+    
+};
 
-void chooseFrist()
+
+void printtMenual(){
+    printf("집 가서 설명글 써오기");
+};
+
+int selectMenu()
 {
     int i;
-    printf("1. 설명글 보기 2. 생성한 닉네임 리스트 보기 3. 닉네임 생성기");
-    switch(i){
-        case 1:
-        printf("집 가서 써오기");
-        case 2:
-        printf("생성한 닉네임 리스트 보기");
-        case 3:
-        printf("닉네임 생성기 불러오기");
-    }
-}
+    printf("****** 닉네임 생성기 ******");
+    printf("\n\n");
+    printf("1. 설명글\n 2. 닉네임 목록\n 3. 닉네임 생성기");
+    scanf("%d",&i);
+    return i;
+};
 
-void printFrist_name()
-{
-    int j;
-    printf("첫 번째 단어의 주제를 선택하십시오.\n");
-    printf("1. 행복 2. 슬픔 3. 화남");
-    scanf("%d", &j);
-    get_Fiveword(j);
+// void printFrist_name()
+// {
+//     int j;
+//     printf("첫 번째 단어의 주제를 선택하십시오.\n");
+//     printf("1. 행복 2. 슬픔 3. 화남");
+//     scanf("%d", &j);
+//     get_Fiveword(j);
     // switch(j){
     //     case 1: // 행복 파일 출력
     //     FILE *fr;
@@ -100,37 +105,37 @@ void printFrist_name()
     //     fw = fopen("감정_화남", "r");
     //     Angry_word();
     // }
-}
+// }
 
-void get_Fiveword(int j){
+// void get_Fiveword(int j){
 
 
-    char result[60] = "\0";
-    FILE *fp = fopen("감정_화남.txt", "r");
-    char str[100];
-    int i, acc=0, lines =0, Lbegin[100] = {0};
-    while(! feof(fp))
-    if(fgets(str,sizeof(str), fp)!=NULL){
-        if(lines>0)
-        Lbegin[lines]=acc;
-        acc += strlen(str) +1;
-        lines++;
-    }
+//     char result[60] = "\0";
+//     FILE *fp = fopen("감정_화남.txt", "r");
+//     char str[100];
+//     int i, acc=0, lines =0, Lbegin[100] = {0};
+//     while(! feof(fp))
+//     if(fgets(str,sizeof(str), fp)!=NULL){
+//         if(lines>0)
+//         Lbegin[lines]=acc;
+//         acc += strlen(str) +1;
+//         lines++;
+//     }
 
-    int random_index[5];
-    srand(time(NULL));
-    for(int i=0; i<5; i++){
+//     int random_index[5];
+//     srand(time(NULL));
+//     for(int i=0; i<5; i++){
         
-        int random;
-        random = rand() % lines;
-        random_index[i]=random;
-    }
-    char choosen_str[5][20];
-    for(int i=0; i<5; i++){
-        fseek(fp, Lbegin[random_index[i]],SEEK_SET);
-        strcpy(choosen_str[i],fgets(str, sizeof(str), fp));
-        printf("%s", choosen_str[i]);
-    }
+//         int random;
+//         random = rand() % lines;
+//         random_index[i]=random;
+//     }
+//     char choosen_str[5][20];
+//     for(int i=0; i<5; i++){
+//         fseek(fp, Lbegin[random_index[i]],SEEK_SET);
+//         strcpy(choosen_str[i],fgets(str, sizeof(str), fp));
+//         printf("%s", choosen_str[i]);
+//     }
     
-    fclose(fp);
-}
+//     fclose(fp);
+// }
