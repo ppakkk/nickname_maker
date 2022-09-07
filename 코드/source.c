@@ -54,38 +54,60 @@ FILE* selectEFile(int j); //감정파일선택
 char selectRandomWords(FILE*fp); //랜덤 추출
 void selectEWord(); //추출된 5개 단어 중 선택
 
+
 int main()
 {
     run(); 
+    return 0;
 };
+
+
+
 
 void run()
 {
     int key;
     while((key=selectMenu())!=0){
         switch(key) {
-            case 1: printMenual(); break;
-            case 2: printf("11"); break; //istNickname();
-            case 3: printf("33");  break; //createNickname();
+            case 1: printf("11"); break; //printmenual();
+            case 2: printf("11"); break; //listNickname();
+            case 3: createNickname();  break; //
         };
     };
     
 };
 
 
-void printtMenual(){
-    printf("집 가서 설명글 써오기");
-};
-
 int selectMenu()
 {
     int i;
     printf("****** 닉네임 생성기 ******");
     printf("\n\n");
-    printf("1. 설명글\n 2. 닉네임 목록\n 3. 닉네임 생성기");
+    printf("1. 설명\n2. 닉네임 목록\n . 닉네임 생성기");
     scanf("%d",&i);
     return i;
 };
+
+
+
+void printMenual(){
+    printf("집 가서 설명글 써오기");
+};
+
+void listNickname(){
+    // 저장된 닉네임 파일을 불러와서 출력하는 기능 짜올 것
+};
+
+
+void createNickname(){
+    // 사용자로부터 감정 키워드 선택할 수 있게 하고
+    FILE*selectEFile(int j); // 선택한 번호 바탕으로 관련된 파일 여는 함수 실행
+}
+
+FILE* selectEFile(int j){
+    // 조건문이나 switch문을 통해서 텍스트 이름 가져와서, 파일 open
+}
+
 
 // void printFrist_name()
 // {
