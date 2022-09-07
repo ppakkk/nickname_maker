@@ -51,8 +51,8 @@ void printMenual(); //1.설명글
 void listNickname(); //2. 닉네임 목록
 void createNickname(); //3.닉네임 생성
 FILE* selectEFile(int j); //감정파일선택
-char selectRandomWords(FILE*fp); //랜덤 추출
-void selectEWord(); //추출된 5개 단어 중 선택
+void selectRandomWords(FILE*fp); //랜덤 추출
+void selectEWord(int j); //추출된 5개 단어 중 선택
 
 
 int main()
@@ -77,18 +77,15 @@ void run()
     
 };
 
-
 int selectMenu()
 {
     int i;
     printf("****** 닉네임 생성기 ******");
     printf("\n\n");
-    printf("1. 설명\n2. 닉네임 목록\n . 닉네임 생성기");
+    printf("1. 설명\n2. 닉네임 목록\n3. 닉네임 생성기");
     scanf("%d",&i);
     return i;
 };
-
-
 
 void printMenual(){
     printf("집 가서 설명글 써오기");
@@ -96,20 +93,74 @@ void printMenual(){
 
 void listNickname(){
     // 저장된 닉네임 파일을 불러와서 출력하는 기능 짜올 것
+    
 };
 
-
 void createNickname(){
-    // 사용자로부터 감정 키워드 선택할 수 있게 하고
-    FILE*selectEFile(int j); // 선택한 번호 바탕으로 관련된 파일 여는 함수 실행
+    int j;
+    printf("첫 번째 닉네임으로 사용할 감정을 선택하십시오.\n");
+    printf("1.감정_슬픔\n2.감정_행복\n3.감정_화남\n");
+    scanf("%d", &j);// 사용자로부터 감정 키워드 선택할 수 있게 하고
+    selectEWord(j);
+    
+     // 선택한 번호 바탕으로 관련된 파일 여는 함수 실행
+}
+
+void selectEWord(int j){
+    FILE *fp=selectEFile(j); //사용자가 선택한 감정유형의 파일 열기
+    selectRandomWords(fp);
+    //랜덤추출 함수 실행
 }
 
 FILE* selectEFile(int j){
-    // 조건문이나 switch문을 통해서 텍스트 이름 가져와서, 파일 open
+    FILE* fp;
+    switch(j){
+        case 1: // 슬픔 파일 출력
+        fp = fopen("감정_슬픔","r");
+        case 2: // 행복 파일 출력
+        fp = fopen("감정_행복", "r");
+        case 3: // 화남 파일 출력
+        fp = fopen("감정_화남", "r");
+    }// 조건문이나 switch문을 통해서 텍스트 이름 가져와서, 파일 open
+    return fp;
 }
 
 
-// void printFrist_name()
+void selectRandomWords(FILE *fp){
+    char str[100];
+    int i, acc=0, lines =0, Lbegin[100] = {0};
+    while(! feof(fp)){
+        if(fgets(str,sizeof(str), fp)!=NULL){
+        if(lines>0)
+        Lbegin[lines]=acc;
+        acc += strlen(str) +1;
+        lines++;
+    }
+    }
+    
+    int random_index[5];
+    srand(time(NULL));
+    for(int i=0; i<5; i++){
+        
+        int random;
+        random = rand() % lines;
+        random_index[i]=random;
+    }
+
+    for (int i=0; i<5; i++){
+        printf("%d",random_index[i]);
+    }
+    // char choosen_str[5][20];
+    // for(int i=0; i<5; i++){
+    //     fseek(fp, Lbegin[random_index[i]],SEEK_SET);
+    //     // strcpy(choosen_str[i],fgets(str, sizeof(str), fp));
+    //     // printf("%s", choosen_str[i]);
+    // }
+    
+    // fclose(fp);
+
+}
+// void printFrist_name() <-이 함수 필요없음
 // {
 //     int j;
 //     printf("첫 번째 단어의 주제를 선택하십시오.\n");
@@ -127,37 +178,4 @@ FILE* selectEFile(int j){
     //     fw = fopen("감정_화남", "r");
     //     Angry_word();
     // }
-// }
-
-// void get_Fiveword(int j){
-
-
-//     char result[60] = "\0";
-//     FILE *fp = fopen("감정_화남.txt", "r");
-//     char str[100];
-//     int i, acc=0, lines =0, Lbegin[100] = {0};
-//     while(! feof(fp))
-//     if(fgets(str,sizeof(str), fp)!=NULL){
-//         if(lines>0)
-//         Lbegin[lines]=acc;
-//         acc += strlen(str) +1;
-//         lines++;
-//     }
-
-//     int random_index[5];
-//     srand(time(NULL));
-//     for(int i=0; i<5; i++){
-        
-//         int random;
-//         random = rand() % lines;
-//         random_index[i]=random;
-//     }
-//     char choosen_str[5][20];
-//     for(int i=0; i<5; i++){
-//         fseek(fp, Lbegin[random_index[i]],SEEK_SET);
-//         strcpy(choosen_str[i],fgets(str, sizeof(str), fp));
-//         printf("%s", choosen_str[i]);
-//     }
-    
-//     fclose(fp);
 // }
