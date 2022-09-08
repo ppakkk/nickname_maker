@@ -1,10 +1,10 @@
 // <개인 맞춤형 닉네임 생성기>
 // 프로그램 진행 순서
-// 맨 처음 사용자에게 1. 설명글 보기 2. 생성한 닉네임 리스트 보기 3. 닉네임 생성기 중 사용자가 숫자 입력해 프린트
-// 창-> 1.행복 2.슬픈 등등 이렇게 추천을 하면 사용자는 숫자를 입력해 선택을 함. ->사용자 입력함수
+// 맨 처음 사용자에게 1. 설명글 보기 2. 생성한 닉네임 리스트 보기 3. 닉네임 생성기 중 사용자가 숫자 입력해 프린트 ->완료
+// 창-> 1.행복 2.슬픈 등등 이렇게 추천을 하면 사용자는 숫자를 입력해 선택을 함. ->사용자 입력함수 ->완료
 // 그러면 프로그램은 행복을 고른 사용자에게는 행복에 들어있는 파일을 출력해줌. ->파일입출력
-// 사용자는 파일에 들어있는 단어를 선택함. 1.기쁘다 2.날뛸 것 같다 등등 (완료)
 // 맨 처음 프로그램은 랜덤하게 5개의 단어를 주어주고 만약 사용자가 마음에드는 단어가 없으면 추가를 선택(랜덤으로)아니면 단어 추가 
+// 사용자는 파일에 들어있는 단어를 선택함. 1.기쁘다 2.날뛸 것 같다 등등 (완료)
 // 사용자는 단어를 선택하고 두 번째 단어를 선택해야 함. ->두 번째 단어 추천 함수
 // 다른 유형의 단어 예)사물,인물,지명이라는 보기를 주어주고 사용자는 선택
 // 그럼 사용자는 저번과 같이 숫자를 입력하고 프로그램은 출력해줌. ->파일입출력
@@ -58,6 +58,10 @@ void selectEWord(int j); //추출된 5개 단어 중 선택
 int main()
 {
     run(); 
+    selectMenu();
+    printMenual();
+    listNickname();
+    createNickname();
     return 0;
 };
 
@@ -69,9 +73,15 @@ void run()
     int key;
     while((key=selectMenu())!=0){
         switch(key) {
-            case 1: printf("11"); break; //printmenual();
-            case 2: printf("11"); break; //listNickname();
-            case 3: createNickname();  break; //
+            case 1: 
+                printMenual(); 
+                break; 
+            case 2: 
+                listNickname(); 
+                break; 
+            case 3: 
+                createNickname();  
+                break; 
         };
     };
     
@@ -88,13 +98,21 @@ int selectMenu()
 };
 
 void printMenual(){
-    printf("집 가서 설명글 써오기");
+    printf("이 개인 맞춤형 닉네임 생성기는 어느 사이트, 어플리케이션을 가도 회원가입 문자가 나오는데 그 닉네임을 결정한 시간을 줄여주는 생성기 입니다.\n ");
+    printf("확률을 통해 내가 이 단어를 얼마나 많이 선택했는지 알려주고 닉네임 목록을 통해 사용자가 전에 선택한 단어들의 조합은 어떻게 되었는지를 알려주게 됩니다.");
 };
 
 void listNickname(){
     // 저장된 닉네임 파일을 불러와서 출력하는 기능 짜올 것
-    
+
 };
+
+struct nickname{
+    char ID[20];
+    char final[20];
+    char keyword[20];
+    char Eword[20];
+}; // 닉네임 생성을 위한 구조체 생성
 
 void createNickname(){
     int j;
@@ -116,11 +134,13 @@ FILE* selectEFile(int j){
     FILE* fp;
     switch(j){
         case 1: // 슬픔 파일 출력
-        fp = fopen("감정_슬픔","r");
+        fp = fopen("감정_슬픔.txt","r");
+
         case 2: // 행복 파일 출력
-        fp = fopen("감정_행복", "r");
+        fp = fopen("감정_행복.txt", "r");
+
         case 3: // 화남 파일 출력
-        fp = fopen("감정_화남", "r");
+        fp = fopen("감정_화남.txt", "r");
     }// 조건문이나 switch문을 통해서 텍스트 이름 가져와서, 파일 open
     return fp;
 }
@@ -150,32 +170,7 @@ void selectRandomWords(FILE *fp){
     for (int i=0; i<5; i++){
         printf("%d",random_index[i]);
     }
-    // char choosen_str[5][20];
-    // for(int i=0; i<5; i++){
-    //     fseek(fp, Lbegin[random_index[i]],SEEK_SET);
-    //     // strcpy(choosen_str[i],fgets(str, sizeof(str), fp));
-    //     // printf("%s", choosen_str[i]);
-    // }
     
-    // fclose(fp);
+}//랜덤 5가지 단어 추출
 
-}
-// void printFrist_name() <-이 함수 필요없음
-// {
-//     int j;
-//     printf("첫 번째 단어의 주제를 선택하십시오.\n");
-//     printf("1. 행복 2. 슬픔 3. 화남");
-//     scanf("%d", &j);
-//     get_Fiveword(j);
-    // switch(j){
-    //     case 1: // 행복 파일 출력
-    //     FILE *fr;
-    //     fr = fopen("감정_행복","r");
-    //     case 2: // 슬픔 파일 출력
-    //     FILE *fw;
-    //     fw = fopen("감정_슬픔", "r");
-    //     case 3: // 화남 파일 출력
-    //     fw = fopen("감정_화남", "r");
-    //     Angry_word();
-    // }
-// }
+// 감정 선택시 오류 발생 
