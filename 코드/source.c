@@ -50,17 +50,12 @@ int selectMenu();//첫 화면
 void printMenual(); // 1.설명글
 void listNickname(); // 2. 닉네임 목록
 void createNickname(); // 3.닉네임 생성
-FILE* selectEFile(int j); // 감정 파일 선택
+FILE* selectFirstFile(int j); // 첫번째 파일 선택
+FILE* selectSecondFile(int j); // 두번째 파일 선택
 void* selectRandomWords(FILE*fp); // 선택된 파일에 대하여 랜덤 키워드 5개 추출
-void selectEWord(int j); //추출된 5개 단어 중 선택
+char* selectKeyword(int j, FILE *fp); // 추출된 5개 단어 중 선택
 
 
-typedef struct nickname{
-    char id[20];
-    char final[MAX_NLEN]; // 최종 닉네임
-    char first_keyword[MAX_KLEN]; // 첫번째 키워드 (감정)
-    char second_keyword[MAX_KLEN]; // 두번째 키워드 (사물 or 인물 or 장소)
-}NICKNAME; // 닉네임 생성을 위한 구조체 생성 
 
 
 int main()
@@ -116,29 +111,40 @@ void listNickname(){
 
 
 void createNickname(){
+    FILE *fp;
     int j;
     printf("=====================================================\n");
     printf("첫 번째 키워드으로 사용될 [감정_유형]을 선택하십시오.\n\n");
     printf("    1: 감정_슬픔\n    2: 감정_행복\n    3: 감정_화남\n");
     scanf("%d", &j);// 사용자로부터 감정 키워드 번호 선택
-    selectEWord(j); // 첫번째 단계 : 감정 키워드 추출
+    fp=selectFirstFile(j); // 첫번째 단계 : 감정 키워드 추출
+    const char* _first_keyword = selectKeyword(j,fp); //return된 첫번째 키워드 저장되어 있음.
+
+    fp=selectSecondFile(j,fp);
+    const char* _second_keyword = selectKeyword(j,fp);
+
     // [ 두번째 단계 : 사물 or 인물 or 장소 키워드 추출 ] -> selectEword()와 유사한 방식으로 만들기
     // [ 최종 단계 : 닉네임 저장하는 함수 구현 및 호출 ] -> saveFile()이란 이름의 함수 만들기
     
 }
 
-void selectEWord(int j){
-    FILE *fp=selectEFile(j); //사용자가 선택한 감정유형의 파일 열기
+char* selectKeyword(int j, FILE *fp){
+    int i;
     char (*p)[MAX_KLEN]=(char(*)[MAX_KLEN])selectRandomWords(fp); //랜덤추출 함수 실행을통해 키워드 5개 반환
     // 배열 포인터를 사용하여 2차원 배열에 저장된 문자열 출력
     for (int i=0;i<5;i++){
-        printf("%s",*(p+i));
+        printf("%d. %s",i,*(p+i));
     }
+    printf("\n마음에 드는 키워드의 순서를 선택하십시오: ");
+    scanf("%d", &i);
+
+    return p+i;
+
     //[ 유저에게 보기 좋게 다섯 키워드 보여주고 선택할 수 있게끔 만들기 ]
     //[ 선택한 단어를 구조체의 first_keyword 변수에 저장하기 ]
 }
 
-FILE* selectEFile(int j){
+FILE* selectFirstFile(int j){
     FILE* fp;
     // switch문을 통해 텍스트 이름 가져와서 파일 open
     switch(j){
@@ -154,6 +160,21 @@ FILE* selectEFile(int j){
     return fp;
 }
 
+FILE* selectSecondFile(int j){
+    FILE* fp;
+    // switch문을 통해 텍스트 이름 가져와서 파일 open
+    switch(j){
+        case 1: // 슬픔 파일 출력
+        fp = fopen("두번째 키워드/사물.txt","r");
+
+        case 2: // 행복 파일 출력
+        fp = fopen("두번째 키워드/인물txt", "r");
+
+        case 3: // 화남 파일 출력
+        fp = fopen("두번째 키워드/지명.txt", "r");
+    }
+    return fp;
+}
 
 
 void *selectRandomWords(FILE *fp){
@@ -172,6 +193,8 @@ void *selectRandomWords(FILE *fp){
     int random_index[5];
     srand((unsigned)time(NULL));
     
+
+
 
     // 랜덤 값 생성 - 중복 제거 기능 추가
     for (int i = 0; i < 5; i++) {
