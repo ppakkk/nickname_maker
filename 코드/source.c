@@ -196,5 +196,3 @@ void *selectRandomWords(FILE *fp){
 
     
 }//랜덤 5가지 단어 추출
-
-// 감정 선택시 오류 발생 
