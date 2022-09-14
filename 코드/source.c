@@ -42,35 +42,37 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define MAX_KLEN 15 //키워드 최대 길이
+#define MAX_KLEN 20 //키워드 최대 길이
 #define MAX_NLEN 30 //닉네임 최대 길이
 
 void run(); //실행
 int selectMenu();//첫 화면
-void printMenual(); //1.설명글
-void listNickname(); //2. 닉네임 목록
-void createNickname(); //3.닉네임 생성
-FILE* selectEFile(int j); //감정파일선택
-void selectRandomWords(FILE*fp); //랜덤 추출
+void printMenual(); // 1.설명글
+void listNickname(); // 2. 닉네임 목록
+void createNickname(); // 3.닉네임 생성
+FILE* selectEFile(int j); // 감정 파일 선택
+void* selectRandomWords(FILE*fp); // 선택된 파일에 대하여 랜덤 키워드 5개 추출
 void selectEWord(int j); //추출된 5개 단어 중 선택
+
+
+typedef struct nickname{
+    char id[20];
+    char final[MAX_NLEN]; // 최종 닉네임
+    char first_keyword[MAX_KLEN]; // 첫번째 키워드 (감정)
+    char second_keyword[MAX_KLEN]; // 두번째 키워드 (사물 or 인물 or 장소)
+}NICKNAME; // 닉네임 생성을 위한 구조체 생성 
 
 
 int main()
 {
-    run(); 
-    selectMenu();
-    printMenual();
-    listNickname();
-    createNickname();
+    run(); // 메인 함수에서는 run 함수만 실행
     return 0;
 };
 
 
-
-
 void run()
 {
-    int key;
+    int key=0;
     while((key=selectMenu())!=0){
         switch(key) {
             case 1: 
@@ -82,17 +84,22 @@ void run()
             case 3: 
                 createNickname();  
                 break; 
+            default: 
+                printf("1-3 사이의 숫자를 입력해주세요.\n"); break;
         };
     };
+    printf("프로그램 종료\n");
     
 };
 
 int selectMenu()
 {
     int i;
-    printf("****** 닉네임 생성기 ******");
+    printf("=================== 닉네임 생성기 =================== (0:종료)");
     printf("\n\n");
-    printf("1. 설명\n2. 닉네임 목록\n3. 닉네임 생성기");
+    printf("    1: 사용 설명서\n");
+    printf("    2: 닉네임 목록\n");
+    printf("    3: 닉네임 생성하기\n");
     scanf("%d",&i);
     return i;
 };
@@ -103,35 +110,37 @@ void printMenual(){
 };
 
 void listNickname(){
-    // 저장된 닉네임 파일을 불러와서 출력하는 기능 짜올 것
-
+    // [ 저장된(저장되어있다고 가정)닉네임 파일을 불러와서 그래도 출력하는 기능 짜올 것 ]
 };
 
-struct nickname{
-    char ID[20];
-    char final[20];
-    char keyword[20];
-    char Eword[20];
-}; // 닉네임 생성을 위한 구조체 생성
+
 
 void createNickname(){
     int j;
-    printf("첫 번째 닉네임으로 사용할 감정을 선택하십시오.\n");
-    printf("1.감정_슬픔\n2.감정_행복\n3.감정_화남\n");
-    scanf("%d", &j);// 사용자로부터 감정 키워드 선택할 수 있게 하고
-    selectEWord(j);
+    printf("=====================================================\n");
+    printf("첫 번째 키워드으로 사용될 [감정_유형]을 선택하십시오.\n\n");
+    printf("    1: 감정_슬픔\n    2: 감정_행복\n    3: 감정_화남\n");
+    scanf("%d", &j);// 사용자로부터 감정 키워드 번호 선택
+    selectEWord(j); // 첫번째 단계 : 감정 키워드 추출
+    // [ 두번째 단계 : 사물 or 인물 or 장소 키워드 추출 ] -> selectEword()와 유사한 방식으로 만들기
+    // [ 최종 단계 : 닉네임 저장하는 함수 구현 및 호출 ] -> saveFile()이란 이름의 함수 만들기
     
-     // 선택한 번호 바탕으로 관련된 파일 여는 함수 실행
 }
 
 void selectEWord(int j){
     FILE *fp=selectEFile(j); //사용자가 선택한 감정유형의 파일 열기
-    selectRandomWords(fp);
-    //랜덤추출 함수 실행
+    char (*p)[MAX_KLEN]=(char(*)[MAX_KLEN])selectRandomWords(fp); //랜덤추출 함수 실행을통해 키워드 5개 반환
+    // 배열 포인터를 사용하여 2차원 배열에 저장된 문자열 출력
+    for (int i=0;i<5;i++){
+        printf("%s",*(p+i));
+    }
+    //[ 유저에게 보기 좋게 다섯 키워드 보여주고 선택할 수 있게끔 만들기 ]
+    //[ 선택한 단어를 구조체의 first_keyword 변수에 저장하기 ]
 }
 
 FILE* selectEFile(int j){
     FILE* fp;
+    // switch문을 통해 텍스트 이름 가져와서 파일 open
     switch(j){
         case 1: // 슬픔 파일 출력
         fp = fopen("감정_슬픔.txt","r");
@@ -141,35 +150,50 @@ FILE* selectEFile(int j){
 
         case 3: // 화남 파일 출력
         fp = fopen("감정_화남.txt", "r");
-    }// 조건문이나 switch문을 통해서 텍스트 이름 가져와서, 파일 open
+    }
     return fp;
 }
 
 
-void selectRandomWords(FILE *fp){
+
+void *selectRandomWords(FILE *fp){
     char str[100];
     int i, acc=0, lines =0, Lbegin[100] = {0};
     while(! feof(fp)){
         if(fgets(str,sizeof(str), fp)!=NULL){
         if(lines>0)
-        Lbegin[lines]=acc;
+        Lbegin[lines]=acc-lines; 
         acc += strlen(str) +1;
+        // printf("%s",str);
         lines++;
     }
     }
     
     int random_index[5];
-    srand(time(NULL));
+    srand((unsigned)time(NULL));
+    
+
+    // 랜덤 값 생성 - 중복 제거 기능 추가
+    for (int i = 0; i < 5; i++) {
+		random_index[i]=rand() % lines;
+		for (int j = 0; j < i; j++) {
+			if (random_index[i] == random_index[j]) i--;
+		}
+	}
+
+    printf("\n");
+    static char choosen_str[5][MAX_KLEN];
     for(int i=0; i<5; i++){
-        
-        int random;
-        random = rand() % lines;
-        random_index[i]=random;
+        fseek(fp, Lbegin[random_index[i]],SEEK_SET); // 랜덤 라인으로 fp 위치 이동
+        strcpy(choosen_str[i],fgets(str,sizeof(str),fp)); //해당 라인 문자열 읽은 후 복사 
+        // printf("%s",choosen_str[i]);
     }
 
-    for (int i=0; i<5; i++){
-        printf("%d",random_index[i]);
-    }
+
+    fclose(fp);
+
+    return choosen_str;
+
     
 }//랜덤 5가지 단어 추출
 
