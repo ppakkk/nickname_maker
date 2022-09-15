@@ -106,25 +106,47 @@ void printMenual(){
 
 void listNickname(){
     // [ 저장된(저장되어있다고 가정)닉네임 파일을 불러와서 그래도 출력하는 기능 짜올 것 ]
+    // 닉네임 목록 파일을 열러서 읽어들일 수 있어야함 
 };
 
+// 랜덤 추출 하는거 추가하는 기능까지 
 
 
 void createNickname(){
     FILE *fp;
-    int j;
+    int j,i;
+    char buffer[100];
     printf("=====================================================\n");
     printf("첫 번째 키워드으로 사용될 [감정_유형]을 선택하십시오.\n\n");
     printf("    1: 감정_슬픔\n    2: 감정_행복\n    3: 감정_화남\n");
     scanf("%d", &j);// 사용자로부터 감정 키워드 번호 선택
     fp=selectFirstFile(j); // 첫번째 단계 : 감정 키워드 추출
     const char* _first_keyword = selectKeyword(j,fp); //return된 첫번째 키워드 저장되어 있음.
+    // printf("%s",_first_keyword);
+    strcpy(buffer,_first_keyword);
 
-    fp=selectSecondFile(j,fp);
-    const char* _second_keyword = selectKeyword(j,fp);
+    printf("=====================================================\n");
+    printf("두 번째 키워드으로 사용될 [감정_유형]을 선택하십시오.\n\n");
+    printf("    1: 사물\n    2: 인물\n    3: 지명\n");
+    scanf("%d", &i);// 사용자로부터 두번째 키워드 번호 선택
+    fp=selectSecondFile(i); // 두번째 단계 : 두번째 키워드 추출
+    const char* _second_keyword = selectKeyword(i,fp); //return된 첫번째 키워드 저장되어 있음.
+    // printf("%s",_second_keyword);
+    strcat(buffer,_second_keyword);
 
-    // [ 두번째 단계 : 사물 or 인물 or 장소 키워드 추출 ] -> selectEword()와 유사한 방식으로 만들기
-    // [ 최종 단계 : 닉네임 저장하는 함수 구현 및 호출 ] -> saveFile()이란 이름의 함수 만들기
+    
+
+    // 줄바꿈 제거
+    for(int i=0;buffer[i]!=0;i++){
+        if(buffer[i]=='\n'){
+            buffer[i]=' ';
+            break;
+        }
+    }
+    printf("%s",buffer);
+
+    // 최종 키워드를 닉네임 목록 파일에 저장
+    
     
 }
 
@@ -165,13 +187,13 @@ FILE* selectSecondFile(int j){
     // switch문을 통해 텍스트 이름 가져와서 파일 open
     switch(j){
         case 1: // 슬픔 파일 출력
-        fp = fopen("두번째 키워드/사물.txt","r");
+        fp = fopen("사물.txt","r");
 
         case 2: // 행복 파일 출력
-        fp = fopen("두번째 키워드/인물txt", "r");
+        fp = fopen("인물txt", "r");
 
         case 3: // 화남 파일 출력
-        fp = fopen("두번째 키워드/지명.txt", "r");
+        fp = fopen("지명.txt", "r");
     }
     return fp;
 }
