@@ -105,6 +105,9 @@ void printMenual(){
 };
 
 void listNickname(){
+    FILE *fp;
+    fp=fopen("닉네임 목록/닉네임 목록.txt","r");
+    fclose(fp);
     // [ 저장된(저장되어있다고 가정)닉네임 파일을 불러와서 그래도 출력하는 기능 짜올 것 ]
     // 닉네임 목록 파일을 열러서 읽어들일 수 있어야함 
 };
