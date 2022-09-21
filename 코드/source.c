@@ -54,7 +54,7 @@ FILE* selectFirstFile(int j); // 첫번째 파일 선택
 FILE* selectSecondFile(int j); // 두번째 파일 선택
 void* selectRandomWords(FILE*fp); // 선택된 파일에 대하여 랜덤 키워드 5개 추출
 char* selectKeyword(int j, FILE *fp); // 추출된 5개 단어 중 선택
-void saveFile(char buffer[100]);
+void saveFile(char buffer[100]); //생성된 닉네임 저장
 
 
 int main()
@@ -100,9 +100,9 @@ int selectMenu()
 
 void printMenual(){
     printf("이 개인맞춤화 닉네임 생성기는 어느 사이트, 어플리케이션을 가도 회원가입이 필수가 된 사회에서 닉네임을 고민할 시간을 줄여주자라는 취지에서 만들게 되었습니다.\n");
-    printf("첫 번째로 선택해야할 키워드는 감정입니다. 두 번째로 선택할 키워드는 사물,지명,인물입니다. 이 두 키워드가 합쳐서 하나의 닉네임을 이루게 됩니다.");
+    printf("첫 번째로 선택해야할 키워드는 감정이며 두 번째로 선택할 키워드는 사물,지명,인물입니다. 이 두 키워드가 합쳐서 하나의 닉네임을 이루게 됩니다.");
     printf("생성된 닉네임은 닉네임 목록에서 다시 보기가 가능하며 확률 기능을 통해 이 키워드를 몇퍼센트 선택했는지 알 수 있습니다.\n");
-    printf("이 닉네임 생성기로 닉네임을 고민하는 시간이 줄어들었으면 좋겠습니다. 그럼 재미있게 사용하시길 바랍니다:)\n\n");
+    printf("이 닉네임 생성기로 닉네임을 고민하고 생각하는 시간이 줄어들었으면 좋겠습니다. 제 취지에 맞고 재미있게 사용해주시기 바랍니다:)\n\n");
 };
 
 void listNickname(){
@@ -249,7 +249,6 @@ void *selectRandomWords(FILE *fp){
 
     
 }//랜덤 5가지 단어 추출
-
 void saveFile(char buffer[100]){
 FILE* fp;
 fp=fopen("닉네임 목록.txt","a");
