@@ -54,6 +54,7 @@ FILE* selectFirstFile(int j); // 첫번째 파일 선택
 FILE* selectSecondFile(int j); // 두번째 파일 선택
 void* selectRandomWords(FILE*fp); // 선택된 파일에 대하여 랜덤 키워드 5개 추출
 char* selectKeyword(int j, FILE *fp); // 추출된 5개 단어 중 선택
+void saveFile(char buffer[100]);
 
 
 int main()
@@ -106,7 +107,11 @@ void printMenual(){
 
 void listNickname(){
     FILE *fp;
-    fp=fopen("닉네임 목록/닉네임 목록.txt","r");
+    fp=fopen("닉네임 목록.txt","r");
+    char buffer[100];
+    fread(buffer, 1, 100, fp); //전체 읽기
+    printf("%s\n", buffer);
+
     fclose(fp);
     // [ 저장된(저장되어있다고 가정)닉네임 파일을 불러와서 그래도 출력하는 기능 짜올 것 ]
     // 닉네임 목록 파일을 열러서 읽어들일 수 있어야함 
@@ -147,7 +152,7 @@ void createNickname(){
         }
     }
     printf("%s",buffer);
-
+    saveFile(buffer);
     // 최종 키워드를 닉네임 목록 파일에 저장
     
     
@@ -218,7 +223,7 @@ void *selectRandomWords(FILE *fp){
     int random_index[5];
     srand((unsigned)time(NULL));
     
-
+    
 
 
     // 랜덤 값 생성 - 중복 제거 기능 추가
@@ -244,3 +249,10 @@ void *selectRandomWords(FILE *fp){
 
     
 }//랜덤 5가지 단어 추출
+
+void saveFile(char buffer[100]){
+FILE* fp;
+fp=fopen("닉네임 목록.txt","a");
+fputs(buffer,fp);
+fclose(fp); 
+}
