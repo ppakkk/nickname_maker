@@ -55,7 +55,12 @@ FILE* selectSecondFile(int j); // 두번째 파일 선택
 void* selectRandomWords(FILE*fp); // 선택된 파일에 대하여 랜덤 키워드 5개 추출
 char* selectKeyword(int j, FILE *fp); // 추출된 5개 단어 중 선택
 void saveFile(char buffer[100]); //생성된 닉네임 저장
+int percentComplete();
 
+
+int percentComplete(){
+
+};
 
 int main()
 {
@@ -205,6 +210,7 @@ FILE* selectSecondFile(int j){
     }
     return fp;
 }
+
 
 
 void *selectRandomWords(FILE *fp){
