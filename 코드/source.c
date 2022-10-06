@@ -113,7 +113,7 @@ void listNickname(){
     FILE *fp;
     fp=fopen("닉네임 목록.txt","r");
     char buffer[100];
-    fread(buffer, 1, 100, fp); //전체 읽기
+    fread(buffer, 1, 100, fp); //전체 읽기 fopen에서 buffer의 값을 1만큼 100번 반복
     printf("%s\n", buffer);
 
     fclose(fp);
@@ -220,7 +220,7 @@ void *selectRandomWords(FILE *fp){
         if(lines>0)
         Lbegin[lines]=acc-lines; 
         acc += strlen(str) +1;
-        // printf("%s",str);
+        // printf("%s",str); 
         lines++;
     }
     }
@@ -242,8 +242,8 @@ void *selectRandomWords(FILE *fp){
     printf("\n");
     static char choosen_str[5][MAX_KLEN];
     for(int i=0; i<5; i++){
-        fseek(fp, Lbegin[random_index[i]],SEEK_SET); // 랜덤 라인으로 fp 위치 이동
-        strcpy(choosen_str[i],fgets(str,sizeof(str),fp)); //해당 라인 문자열 읽은 후 복사 
+        fseek(fp, Lbegin[random_index[i]],SEEK_SET); // 랜덤 라인으로 fp 위치 이동 파일 포인터 위치 이동
+        strcpy(choosen_str[i],fgets(str,sizeof(str),fp)); //해당 라인 문자열 읽은 후 복사 *핵심 코드 fseek에서 끊은 단어들을 fgets의 값에 넣음.
         // printf("%s",choosen_str[i]);
     }
 
@@ -254,21 +254,10 @@ void *selectRandomWords(FILE *fp){
 
     
 }//랜덤 5가지 단어 추출
+
 void saveFile(char buffer[100]){
 FILE* fp;
 fp=fopen("닉네임 목록.txt","a");
 fputs(buffer,fp);
 fclose(fp); 
 }
-
-// int percentComplete(){
-// int i;
-// FILE* fp = fopen;
-// fp= fopen("");
-
-// }; //닉네임들의 함수 출력
-
-//1. 확률 파일불러오기 2. 포인터로 0~ 확률 랜덤 수 뽑기 <-실행
-//3. 확률 변경하기 (배열 포인터로 주고 그 배열에서 몇 번째 값을 변경할건지 인덱스 주어야함.), 더하거나 뺄 값 주어주기
-//3. 확률 변경 후의 값이 1보다 작으면 0 촤대 1
-//4. 배열에 있는 값 업데이트(기존 값 덮어쓰기) <- 마지막
