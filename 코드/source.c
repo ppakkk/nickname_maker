@@ -58,14 +58,13 @@ void saveFile(char buffer[100]); //생성된 닉네임 저장
 int percentComplete();
 
 
-int percentComplete(){
 
-};
 
 int main()
 {
     run(); // 메인 함수에서는 run 함수만 실행
     return 0;
+    int*p;
 };
 
 
@@ -261,3 +260,15 @@ fp=fopen("닉네임 목록.txt","a");
 fputs(buffer,fp);
 fclose(fp); 
 }
+
+// int percentComplete(){
+// int i;
+// FILE* fp = fopen;
+// fp= fopen("");
+
+// }; //닉네임들의 함수 출력
+
+//1. 확률 파일불러오기 2. 포인터로 0~ 확률 랜덤 수 뽑기 <-실행
+//3. 확률 변경하기 (배열 포인터로 주고 그 배열에서 몇 번째 값을 변경할건지 인덱스 주어야함.), 더하거나 뺄 값 주어주기
+//3. 확률 변경 후의 값이 1보다 작으면 0 촤대 1
+//4. 배열에 있는 값 업데이트(기존 값 덮어쓰기) <- 마지막
